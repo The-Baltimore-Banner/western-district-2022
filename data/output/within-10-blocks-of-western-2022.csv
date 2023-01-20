@@ -1,0 +1,149 @@
+crime_date_time,location,district,neighborhood,premise,year,month,date,time_range,quarter,longitude,latitude,victims,average_age,juvenile_victims,id,near_western_near,geometry,color
+2022-01-08T21:01:00Z,500 W Hoffman St,Central,Upton,Street,2022,1,2022-01-08,Night,1,-76.6266,39.3004,1,22,0,5766,TRUE,"c(-76.6266, 39.3004)",#00d3ff
+2022-01-09T01:38:00Z,300 S Addison St,Southern,Carrollton Ridge,Street,2022,1,2022-01-09,Early Morning,1,-76.6459,39.2842,1,45,0,5767,TRUE,"c(-76.6459, 39.2842)",#d25a3f
+2022-01-15T20:57:56Z,2600 Saint Benedict St,Southwestern,Millhill,Street,2022,1,2022-01-15,Night,1,-76.6565,39.28,1,60,0,5785,TRUE,"c(-76.6565, 39.28)",#0065d1
+2022-01-17T14:00:00Z,2000 W Pratt St,Southern,Carrollton Ridge,Public Area,2022,1,2022-01-17,Early Afternoon,1,-76.6487,39.2852,2,25,0,5790,TRUE,"c(-76.6487, 39.2852)",#d25a3f
+2022-01-28T06:52:00Z,2500 Mchenry St,Southwestern,Shipley Hill,Street,2022,1,2022-01-28,Morning,1,-76.656,39.284,1,29,0,5823,TRUE,"c(-76.656, 39.284)",#0065d1
+2022-01-31T01:37:50Z,3400 N Franklintown Rd,Southwestern,Franklintown Road,Street,2022,1,2022-01-31,Early Morning,1,-76.6681,39.2989,1,31,0,5828,TRUE,"c(-76.6681, 39.2989)",#0065d1
+2022-02-02T14:36:00Z,1100 Carroll St,Southern,Washington Village/Pigtown,Street,2022,2,2022-02-02,Early Afternoon,1,-76.6316,39.2821,1,30,0,5831,TRUE,"c(-76.6316, 39.2821)",#d25a3f
+2022-02-08T05:14:00Z,0 S Franklintown Rd,Southwestern,Shipley Hill,Street,2022,2,2022-02-08,Morning,1,-76.6587,39.2876,1,17,1,5840,TRUE,"c(-76.6587, 39.2876)",#0065d1
+2022-02-08T14:06:00Z,600 S Smallwood St,Southwestern,Carrollton Ridge,Street,2022,2,2022-02-08,Early Afternoon,1,-76.6505,39.2806,2,26,0,5841,TRUE,"c(-76.6505, 39.2806)",#0065d1
+2022-02-10T12:49:00Z,2500 Linden Ave,Central,Reservoir Hill,Street,2022,2,2022-02-10,Early Afternoon,1,-76.6362,39.3152,1,22,0,5847,TRUE,"c(-76.6362, 39.3152)",#00d3ff
+2022-02-11T09:31:14Z,500 S Payson St,Southern,Carrollton Ridge,Street,2022,2,2022-02-11,Morning,1,-76.6478,39.2816,1,35,0,5849,TRUE,"c(-76.6478, 39.2816)",#d25a3f
+2022-02-12T00:32:57Z,400 W Mulberry St,Central,Downtown,Parking Lot,2022,2,2022-02-12,Early Morning,1,-76.622,39.2938,1,21,0,5851,TRUE,"c(-76.622, 39.2938)",#00d3ff
+2022-02-15T07:08:00Z,400 W Mulberry St,Central,Downtown,Street,2022,2,2022-02-15,Morning,1,-76.6213,39.2939,1,29,0,5859,TRUE,"c(-76.6213, 39.2939)",#00d3ff
+2022-02-16T17:24:00Z,1700 Cole St,Southern,New Southwest/Mount Clare,Dwelling,2022,2,2022-02-16,Evening,1,-76.6435,39.2822,2,22.5,0,5861,TRUE,"c(-76.6435, 39.2822)",#d25a3f
+2022-02-16T18:17:00Z,3500 Gelston Dr,Southwestern,Gwynns Falls/Leakin Park,Street,2022,2,2022-02-16,Evening,1,-76.675,39.2977,3,18,1,5862,TRUE,"c(-76.675, 39.2977)",#0065d1
+2022-02-17T16:42:00Z,2300 Eutaw Pl,Central,Reservoir Hill,Street,2022,2,2022-02-17,After School,1,-76.6354,39.3118,1,35,0,5865,TRUE,"c(-76.6354, 39.3118)",#00d3ff
+2022-02-19T20:15:00Z,1500 Pennsylvania Ave,Central,Upton,Street,2022,2,2022-02-19,Night,1,-76.6328,39.3019,1,28,0,5869,TRUE,"c(-76.6328, 39.3019)",#00d3ff
+2022-02-21T20:31:00Z,2800 Riggs Ave,Southwestern,Winchester,Street,2022,2,2022-02-21,Night,1,-76.6636,39.3004,1,50,0,5871,TRUE,"c(-76.6636, 39.3004)",#0065d1
+2022-02-25T20:30:00Z,3100 W Baltimore St,Southwestern,Carroll-South Hilton,Street,2022,2,2022-02-25,Night,1,-76.6691,39.286,1,31,0,5879,TRUE,"c(-76.6691, 39.286)",#0065d1
+2022-02-26T01:29:00Z,2100 Frederick Ave,Southwestern,Carrollton Ridge,Common Business,2022,2,2022-02-26,Early Morning,1,-76.6501,39.2856,1,33,0,5880,TRUE,"c(-76.6501, 39.2856)",#0065d1
+2022-03-02T18:33:00Z,1900 N Dukeland St,Southwestern,Walbrook,Street,2022,3,2022-03-02,Evening,1,-76.6641,39.3093,4,38.2,0,5888,TRUE,"c(-76.6641, 39.3093)",#0065d1
+2022-03-07T05:29:30Z,2300 Frederick Ave,Southwestern,Millhill,Common Business,2022,3,2022-03-07,Morning,1,-76.6544,39.2842,1,25,0,5894,TRUE,"c(-76.6544, 39.2842)",#0065d1
+2022-03-07T11:35:00Z,1300 W Cross St,Southern,Washington Village/Pigtown,Street,2022,3,2022-03-07,Morning,1,-76.6325,39.2829,1,20,0,5895,TRUE,"c(-76.6325, 39.2829)",#d25a3f
+2022-03-08T13:56:00Z,500 Dolphin St,Central,Upton,Street,2022,3,2022-03-08,Early Afternoon,1,-76.6276,39.3012,1,42,0,5897,TRUE,"c(-76.6276, 39.3012)",#00d3ff
+2022-03-09T20:13:26Z,400 S Smallwood St,Southwestern,Carrollton Ridge,Street,2022,3,2022-03-09,Night,1,-76.6512,39.2829,1,41,0,5899,TRUE,"c(-76.6512, 39.2829)",#0065d1
+2022-03-10T08:00:00Z,1900 Mcculloh St,Central,Madison Park,Street,2022,3,2022-03-10,Morning,1,-76.6339,39.3076,1,50,0,5900,TRUE,"c(-76.6339, 39.3076)",#00d3ff
+2022-03-10T17:13:00Z,500 Robert St,Central,Druid Heights,Street,2022,3,2022-03-10,Evening,1,-76.6346,39.3066,1,28,0,5901,TRUE,"c(-76.6346, 39.3066)",#00d3ff
+2022-03-18T02:35:24Z,2200 Morris St,Central,Reservoir Hill,Alley,2022,3,2022-03-18,Early Morning,1,-76.637,39.3118,1,34,0,5922,TRUE,"c(-76.637, 39.3118)",#00d3ff
+2022-03-18T15:17:00Z,1700 Mcculloh St,Central,Upton,Street,2022,3,2022-03-18,After School,1,-76.6318,39.3057,3,32,1,5924,TRUE,"c(-76.6318, 39.3057)",#00d3ff
+2022-03-21T18:50:00Z,2000 Eutaw Pl,Central,Madison Park,Street,2022,3,2022-03-21,Evening,1,-76.633,39.3093,1,44,0,5936,TRUE,"c(-76.633, 39.3093)",#00d3ff
+2022-03-24T13:17:00Z,1800 Eagle St,Southern,Carrollton Ridge,Public Area,2022,3,2022-03-24,Early Afternoon,1,-76.6449,39.2811,1,21,0,5940,TRUE,"c(-76.6449, 39.2811)",#d25a3f
+2022-03-25T15:29:31Z,1900 Denison St,Southwestern,Mount Holly,Street,2022,3,2022-03-25,After School,1,-76.6742,39.3089,1,26,0,5945,TRUE,"c(-76.6742, 39.3089)",#0065d1
+2022-03-30T17:38:00Z,1900 Christian St,Southern,Carrollton Ridge,Public Area,2022,3,2022-03-30,Evening,1,-76.6467,39.2828,1,38,0,5953,TRUE,"c(-76.6467, 39.2828)",#d25a3f
+2022-04-05T23:33:05Z,700 Linnard St,Southwestern,Edgewood,Dwelling,2022,4,2022-04-05,Night,2,-76.6758,39.296,1,40,0,5962,TRUE,"c(-76.6758, 39.296)",#0065d1
+2022-04-08T23:38:00Z,400 N Greene St,Central,University Of Maryland,Street,2022,4,2022-04-08,Night,2,-76.624,39.2938,1,17,1,5968,TRUE,"c(-76.624, 39.2938)",#00d3ff
+2022-04-09T17:16:00Z,300 S Monroe St,Southern,Carrollton Ridge,Public Area,2022,4,2022-04-09,Evening,2,-76.6468,39.2842,1,29,0,5970,TRUE,"c(-76.6468, 39.2842)",#d25a3f
+2022-04-10T16:15:00Z,2100 Wilhelm St,Southwestern,Carrollton Ridge,Street,2022,4,2022-04-10,After School,2,-76.6499,39.2836,1,35,0,5973,TRUE,"c(-76.6499, 39.2836)",#0065d1
+2022-04-11T02:48:00Z,3300 Gwynns Falls Pkwy,Northwestern,Hanlon-Longwood,Street,2022,4,2022-04-11,Early Morning,2,-76.6733,39.3144,1,17,1,5975,TRUE,"c(-76.6733, 39.3144)",#ff9200
+2022-04-14T01:26:47Z,1800 Wilkens Ave,Southern,Carrollton Ridge,Alley,2022,4,2022-04-14,Early Morning,2,-76.645,39.2827,1,47,0,5980,TRUE,"c(-76.645, 39.2827)",#d25a3f
+2022-04-15T00:24:24Z,100 N Kossuth St,Southwestern,Saint Josephs,Street,2022,4,2022-04-15,Early Morning,2,-76.6737,39.2885,1,27,0,5982,TRUE,"c(-76.6737, 39.2885)",#0065d1
+2022-04-17T20:47:00Z,1500 Pennsylvania Ave,Central,Upton,Dwelling,2022,4,2022-04-17,Night,2,-76.6331,39.3022,1,53,0,5992,TRUE,"c(-76.6331, 39.3022)",#00d3ff
+2022-04-19T20:19:27Z,300 S Monroe St,Southern,Carrollton Ridge,Street,2022,4,2022-04-19,Night,2,-76.6459,39.2836,1,21,0,5996,TRUE,"c(-76.6459, 39.2836)",#d25a3f
+2022-04-25T22:06:48Z,2900 Brighton St,Southwestern,Northwest Community Action,Street,2022,4,2022-04-25,Night,2,-76.6656,39.3053,1,21,0,6010,TRUE,"c(-76.6656, 39.3053)",#0065d1
+2022-05-01T02:03:02Z,2900 Presbury St,Southwestern,Northwest Community Action,Street,2022,5,2022-05-01,Early Morning,2,-76.6662,39.3073,1,30,0,6019,TRUE,"c(-76.6662, 39.3073)",#0065d1
+2022-05-01T10:43:12Z,900 Druid Hill Ave,Central,Heritage Crossing,Street,2022,5,2022-05-01,Morning,2,-76.6243,39.2985,1,39,0,6020,TRUE,"c(-76.6243, 39.2985)",#00d3ff
+2022-05-01T17:16:38Z,900 Pennsylvania Ave,Central,Heritage Crossing,Dwelling,2022,5,2022-05-01,Evening,2,-76.6264,39.2969,1,38,0,6021,TRUE,"c(-76.6264, 39.2969)",#00d3ff
+2022-05-01T23:30:00Z,1000 Mcculloh St,Central,Upton,Street,2022,5,2022-05-01,Night,2,-76.6249,39.3002,1,41,0,6022,TRUE,"c(-76.6249, 39.3002)",#00d3ff
+2022-05-06T12:49:33Z,900 W North Ave,Central,Reservoir Hill,Street,2022,5,2022-05-06,Early Afternoon,2,-76.6325,39.3106,2,40.5,0,6032,TRUE,"c(-76.6325, 39.3106)",#00d3ff
+2022-05-08T19:21:55Z,300 Furrow St,Southwestern,Carrollton Ridge,Vacant Dwelling,2022,5,2022-05-08,Evening,2,-76.6518,39.2835,1,35,0,6033,TRUE,"c(-76.6518, 39.2835)",#0065d1
+2022-05-12T09:10:27Z,100 S Carrollton Ave,Southern,Hollins Market,Street,2022,5,2022-05-12,Morning,2,-76.6367,39.2863,1,33,0,6041,TRUE,"c(-76.6367, 39.2863)",#d25a3f
+2022-05-12T22:40:00Z,1800 Wilhelm St,Southern,Carrollton Ridge,Vacant Dwelling,2022,5,2022-05-12,Night,2,-76.6452,39.2837,1,32,0,6044,TRUE,"c(-76.6452, 39.2837)",#d25a3f
+2022-05-13T17:49:00Z,2200 Ramsay St,Southwestern,Carrollton Ridge,Street,2022,5,2022-05-13,Evening,2,-76.6513,39.283,1,NA,0,6048,TRUE,"c(-76.6513, 39.283)",#0065d1
+2022-05-21T20:40:00Z,1100 Tiffany Ct,Central,Upton,Street,2022,5,2022-05-21,Night,2,-76.6255,39.3015,1,35,0,6055,TRUE,"c(-76.6255, 39.3015)",#00d3ff
+2022-05-24T17:54:00Z,2900 Mosher St,Southwestern,Franklintown Road,Street,2022,5,2022-05-24,Evening,2,-76.6653,39.2993,1,28,0,6062,TRUE,"c(-76.6653, 39.2993)",#0065d1
+2022-05-26T00:29:02Z,0 N Catherine St,Southwestern,Shipley Hill,Street,2022,5,2022-05-26,Early Morning,2,-76.6564,39.2881,1,59,0,6064,TRUE,"c(-76.6564, 39.2881)",#0065d1
+2022-05-31T17:24:24Z,1800 Pennsylvania Ave,Central,Upton,Common Business,2022,5,2022-05-31,Evening,2,-76.6365,39.3051,1,16,1,6077,TRUE,"c(-76.6365, 39.3051)",#00d3ff
+2022-06-02T02:25:43Z,300 S Pulaski St,Southwestern,Carrollton Ridge,Public Area,2022,6,2022-06-02,Early Morning,2,-76.6499,39.2838,1,28,0,6080,TRUE,"c(-76.6499, 39.2838)",#0065d1
+2022-06-04T18:15:51Z,1900 Wilhelm St,Southern,Carrollton Ridge,Alley,2022,6,2022-06-04,Evening,2,-76.6469,39.2838,1,41,0,6085,TRUE,"c(-76.6469, 39.2838)",#d25a3f
+2022-06-07T06:45:16Z,1900 Ramsay St,Southern,Carrollton Ridge,Street,2022,6,2022-06-07,Morning,2,-76.6467,39.2832,1,32,0,6091,TRUE,"c(-76.6467, 39.2832)",#d25a3f
+2022-06-08T03:30:00Z,1800 Wilkens Ave,Southern,Carrollton Ridge,Street,2022,6,2022-06-08,Early Morning,2,-76.645,39.2827,1,30,0,6094,TRUE,"c(-76.645, 39.2827)",#d25a3f
+2022-06-10T11:50:00Z,500 Presstman St,Central,Druid Heights,Street,2022,6,2022-06-10,Morning,2,-76.6356,39.3074,1,38,0,6098,TRUE,"c(-76.6356, 39.3074)",#00d3ff
+2022-06-11T04:14:00Z,NA,Southern,Washington Village/Pigtown,Public School,2022,6,2022-06-11,Morning,2,-76.638,39.2856,1,24,0,6100,TRUE,"c(-76.638, 39.2856)",#d25a3f
+2022-06-12T10:56:00Z,1900 Christian St,Southern,Carrollton Ridge,Alley,2022,6,2022-06-12,Morning,2,-76.6467,39.2828,1,24,0,6102,TRUE,"c(-76.6467, 39.2828)",#d25a3f
+2022-06-14T23:06:00Z,1500 Shields Pl,Central,Upton,Street,2022,6,2022-06-14,Night,2,-76.6342,39.3009,1,32,0,6107,TRUE,"c(-76.6342, 39.3009)",#00d3ff
+2022-06-15T03:52:15Z,400 W Mulberry St,Central,Downtown,Common Business,2022,6,2022-06-15,Early Morning,2,-76.622,39.2938,1,33,0,6109,TRUE,"c(-76.622, 39.2938)",#00d3ff
+2022-06-15T06:05:57Z,2200 Ashton St,Southwestern,Carrollton Ridge,Street,2022,6,2022-06-15,Morning,2,-76.6512,39.282,1,21,0,6110,TRUE,"c(-76.6512, 39.282)",#0065d1
+2022-06-18T16:58:28Z,1900 Ramsay St,Southern,Carrollton Ridge,Street,2022,6,2022-06-18,After School,2,-76.6467,39.2832,1,29,0,6120,TRUE,"c(-76.6467, 39.2832)",#d25a3f
+2022-06-19T23:56:00Z,2700 Kinsey Ave,Southwestern,Shipley Hill,Street,2022,6,2022-06-19,Night,2,-76.6596,39.2877,2,45,0,6125,TRUE,"c(-76.6596, 39.2877)",#0065d1
+2022-06-20T20:45:53Z,400 Presstman St,Central,Druid Heights,Alley,2022,6,2022-06-20,Night,2,-76.6339,39.3087,1,31,0,6127,TRUE,"c(-76.6339, 39.3087)",#00d3ff
+2022-06-21T01:14:07Z,0 S Greene St,Central,University Of Maryland,Hospital,2022,6,2022-06-21,Early Morning,2,-76.6237,39.2884,1,17,1,6129,TRUE,"c(-76.6237, 39.2884)",#00d3ff
+2022-06-24T21:34:54Z,100 S Mount St,Southern,Union Square,Dwelling,2022,6,2022-06-24,Night,2,-76.6437,39.2861,1,32,0,6140,TRUE,"c(-76.6437, 39.2861)",#d25a3f
+2022-06-26T04:01:14Z,2500 Liberty Heights Ave,Northwestern,Burleith-Leighton,Dwelling,2022,6,2022-06-26,Morning,2,-76.6568,39.3195,2,21,0,6149,TRUE,"c(-76.6568, 39.3195)",#ff9200
+2022-07-01T17:22:00Z,400 S Gilmor St,Southern,New Southwest/Mount Clare,Street,2022,7,2022-07-01,Evening,3,-76.6421,39.2832,1,25,0,6162,TRUE,"c(-76.6421, 39.2832)",#d25a3f
+2022-07-01T21:37:00Z,600 Laurens St,Central,Upton,Street,2022,7,2022-07-01,Night,3,-76.6357,39.3043,1,37,0,6163,TRUE,"c(-76.6357, 39.3043)",#00d3ff
+2022-07-02T18:42:46Z,600 N Eutaw St,Central,Seton Hill,Street,2022,7,2022-07-02,Evening,3,-76.6214,39.2958,1,52,0,6168,TRUE,"c(-76.6214, 39.2958)",#00d3ff
+2022-07-03T15:24:47Z,600 Mosher St,Central,Upton,Street,2022,7,2022-07-03,After School,3,-76.6328,39.302,1,19,0,6171,TRUE,"c(-76.6328, 39.302)",#00d3ff
+2022-07-05T16:25:10Z,1200 Division St,Central,Upton,Street,2022,7,2022-07-05,After School,3,-76.6287,39.3004,1,16,1,6174,TRUE,"c(-76.6287, 39.3004)",#00d3ff
+2022-07-09T00:34:28Z,2500 W Fairmount Ave,Southwestern,Shipley Hill,Street,2022,7,2022-07-09,Early Morning,3,-76.6569,39.2884,2,35.5,0,6181,TRUE,"c(-76.6569, 39.2884)",#0065d1
+2022-07-11T00:36:54Z,400 S Bentalou St,Southwestern,Millhill,Street,2022,7,2022-07-11,Early Morning,3,-76.6526,39.283,1,17,1,6187,TRUE,"c(-76.6526, 39.283)",#0065d1
+2022-07-13T02:32:19Z,700 Pennsylvania Ave,Central,Seton Hill,Street,2022,7,2022-07-13,Early Morning,3,-76.6252,39.2957,1,37,0,6192,TRUE,"c(-76.6252, 39.2957)",#00d3ff
+2022-07-13T03:54:15Z,500 W Mulberry St,Central,University Of Maryland,Parking Lot,2022,7,2022-07-13,Early Morning,3,-76.6234,39.2937,1,52,0,6193,TRUE,"c(-76.6234, 39.2937)",#00d3ff
+2022-07-16T23:57:25Z,1300 Ramsay St,Southern,New Southwest/Mount Clare,Street,2022,7,2022-07-16,Night,3,-76.6386,39.2839,1,22,0,6201,TRUE,"c(-76.6386, 39.2839)",#d25a3f
+2022-07-17T14:05:14Z,2700 W Fairmount Ave,Southwestern,Shipley Hill,Street,2022,7,2022-07-17,Early Afternoon,3,-76.6593,39.2884,1,40,0,6203,TRUE,"c(-76.6593, 39.2884)",#0065d1
+2022-07-18T12:21:00Z,600 Pitcher St,Central,Upton,Street,2022,7,2022-07-18,Early Afternoon,3,-76.6342,39.3031,1,41,0,6207,TRUE,"c(-76.6342, 39.3031)",#00d3ff
+2022-07-20T00:07:32Z,3300 Powhatan Ave,Northwestern,Forest Park,Street,2022,7,2022-07-20,Early Morning,3,-76.6738,39.3206,1,27,0,6211,TRUE,"c(-76.6738, 39.3206)",#ff9200
+2022-07-23T07:22:26Z,1300 W Pratt St,Southern,Union Square,Street,2022,7,2022-07-23,Morning,3,-76.638,39.2856,1,27,0,6226,TRUE,"c(-76.638, 39.2856)",#d25a3f
+2022-07-26T16:35:29Z,800 Edmondson Ave,Central,Upton,Alley,2022,7,2022-07-26,After School,3,-76.6309,39.2962,1,34,0,6232,TRUE,"c(-76.6309, 39.2962)",#00d3ff
+2022-07-26T18:32:00Z,2100 Hollins St,Southwestern,Boyd-Booth,Street,2022,7,2022-07-26,Evening,3,-76.6501,39.2871,1,39,0,6233,TRUE,"c(-76.6501, 39.2871)",#0065d1
+2022-07-28T04:38:03Z,2900 Mosher St,Southwestern,Franklintown Road,Street,2022,7,2022-07-28,Morning,3,-76.6659,39.2991,1,40,0,6236,TRUE,"c(-76.6659, 39.2991)",#0065d1
+2022-07-29T10:36:08Z,3100 W North Ave,Southwestern,Walbrook,Street,2022,7,2022-07-29,Morning,3,-76.6694,39.3091,4,35.2,1,6239,TRUE,"c(-76.6694, 39.3091)",#0065d1
+2022-08-03T20:38:39Z,2900 Belmont Ave,Southwestern,Northwest Community Action,Street,2022,8,2022-08-03,Night,3,-76.666,39.3036,2,30,0,6253,TRUE,"c(-76.666, 39.3036)",#0065d1
+2022-08-05T00:49:23Z,500 W Preston St,Central,Upton,Street,2022,8,2022-08-05,Early Morning,3,-76.6269,39.2987,1,32,0,6256,TRUE,"c(-76.6269, 39.2987)",#00d3ff
+2022-08-06T19:59:15Z,600 Linnard St,Southwestern,Edgewood,Dwelling,2022,8,2022-08-06,Evening,3,-76.6765,39.294,1,15,1,6262,TRUE,"c(-76.6765, 39.294)",#0065d1
+2022-08-06T23:23:22Z,600 Laurens St,Central,Upton,Street,2022,8,2022-08-06,Night,3,-76.6357,39.3043,1,37,0,6263,TRUE,"c(-76.6357, 39.3043)",#00d3ff
+2022-08-07T22:55:00Z,1000 Poplar Grove St,Southwestern,Franklintown Road,Street,2022,8,2022-08-07,Night,3,-76.6652,39.2992,2,37.5,0,6264,TRUE,"c(-76.6652, 39.2992)",#0065d1
+2022-08-08T15:34:00Z,2800 Baker St,Southwestern,Northwest Community Action,Hospital,2022,8,2022-08-08,After School,3,-76.664,39.3061,2,15.5,2,6266,TRUE,"c(-76.664, 39.3061)",#0065d1
+2022-08-12T04:44:00Z,600 S Smallwood St,Southwestern,Carrollton Ridge,Street,2022,8,2022-08-12,Morning,3,-76.6505,39.2806,1,54,0,6272,TRUE,"c(-76.6505, 39.2806)",#0065d1
+2022-08-13T18:00:00Z,200 S Stricker St,Southern,New Southwest/Mount Clare,Street,2022,8,2022-08-13,Evening,3,-76.6408,39.2854,1,17,1,6276,TRUE,"c(-76.6408, 39.2854)",#d25a3f
+2022-08-13T23:28:23Z,1200 W Lombard St,Southern,Hollins Market,Alley,2022,8,2022-08-13,Night,3,-76.6367,39.2867,1,34,0,6278,TRUE,"c(-76.6367, 39.2867)",#d25a3f
+2022-08-15T00:49:11Z,300 Park Ave,Central,Downtown,Common Business,2022,8,2022-08-15,Early Morning,3,-76.6182,39.2934,1,35,0,6281,TRUE,"c(-76.6182, 39.2934)",#00d3ff
+2022-08-19T19:44:32Z,2200 Christian St,Southwestern,Carrollton Ridge,Street,2022,8,2022-08-19,Evening,3,-76.651,39.2814,1,22,0,6289,TRUE,"c(-76.651, 39.2814)",#0065d1
+2022-08-19T20:14:34Z,2900 Reisterstown Rd,Northwestern,Liberty Square,Street,2022,8,2022-08-19,Night,3,-76.6545,39.3209,1,23,0,6290,TRUE,"c(-76.6545, 39.3209)",#ff9200
+2022-08-20T00:39:25Z,2300 Ashton St,Southwestern,Millhill,Street,2022,8,2022-08-20,Early Morning,3,-76.6526,39.2815,1,38,0,6291,TRUE,"c(-76.6526, 39.2815)",#0065d1
+2022-08-22T23:49:32Z,1200 Washington Blvd,Southern,Washington Village/Pigtown,Dwelling,2022,8,2022-08-22,Night,3,-76.6344,39.2814,1,57,0,6299,TRUE,"c(-76.6344, 39.2814)",#d25a3f
+2022-08-29T23:32:18Z,1400 W Ostend St,Southern,Washington Village/Pigtown,Public Area,2022,8,2022-08-29,Night,3,-76.635,39.2826,2,40,0,6318,TRUE,"c(-76.635, 39.2826)",#d25a3f
+2022-08-31T15:22:12Z,2600 Wilkens Ave,Southwestern,Millhill,Street,2022,8,2022-08-31,After School,3,-76.6561,39.279,1,39,0,6322,TRUE,"c(-76.6561, 39.279)",#0065d1
+2022-09-01T22:27:23Z,2500 Hollins St,Southwestern,Shipley Hill,Vehicle,2022,9,2022-09-01,Night,3,-76.6582,39.2867,1,28,0,6326,TRUE,"c(-76.6582, 39.2867)",#0065d1
+2022-09-05T00:22:24Z,0 S Greene St,Central,University Of Maryland,Street,2022,9,2022-09-05,Early Morning,3,-76.6237,39.2884,1,31,0,6328,TRUE,"c(-76.6237, 39.2884)",#00d3ff
+2022-09-07T11:30:57Z,2000 N Longwood St,Southwestern,Walbrook,Street,2022,9,2022-09-07,Morning,3,-76.6677,39.3102,1,32,0,6333,TRUE,"c(-76.6677, 39.3102)",#0065d1
+2022-09-09T23:56:09Z,400 N Franklintown Rd,Southwestern,Penrose/Fayette Street Outreach,Street,2022,9,2022-09-09,Night,3,-76.6623,39.2928,1,21,0,6339,TRUE,"c(-76.6623, 39.2928)",#0065d1
+2022-09-11T12:35:37Z,2600 Frederick Ave,Southwestern,Shipley Hill,Vehicle,2022,9,2022-09-11,Early Afternoon,3,-76.6574,39.2825,1,38,0,6343,TRUE,"c(-76.6574, 39.2825)",#0065d1
+2022-09-14T07:39:00Z,1300 Poplar Grove St,Southwestern,Winchester,Alley,2022,9,2022-09-14,Morning,3,-76.6654,39.3022,1,35,0,6347,TRUE,"c(-76.6654, 39.3022)",#0065d1
+2022-09-14T21:19:50Z,3000 W North Ave,Southwestern,Walbrook,Public Housing,2022,9,2022-09-14,Night,3,-76.6684,39.3091,1,23,0,6349,TRUE,"c(-76.6684, 39.3091)",#0065d1
+2022-09-15T20:07:57Z,1700 Mcculloh St,Central,Upton,Street,2022,9,2022-09-15,Night,3,-76.6318,39.3057,2,31,0,6350,TRUE,"c(-76.6318, 39.3057)",#00d3ff
+2022-09-17T17:59:00Z,1500 Pennsylvania Ave,Central,Upton,Hospital,2022,9,2022-09-17,Evening,3,-76.6328,39.3019,1,26,0,6356,TRUE,"c(-76.6328, 39.3019)",#00d3ff
+2022-10-06T15:49:11Z,300 W Lexington St,Central,Downtown,Street,2022,10,2022-10-06,After School,4,-76.6196,39.2916,1,23,0,6384,TRUE,"c(-76.6196, 39.2916)",#00d3ff
+2022-10-10T20:44:39Z,1900 Braddish Ave,Southwestern,Walbrook,Street,2022,10,2022-10-10,Night,4,-76.6612,39.3094,1,39,0,6393,TRUE,"c(-76.6612, 39.3094)",#0065d1
+2022-10-12T21:28:44Z,2800 Baker St,Southwestern,Coppin Heights/Ash-Co-East,Street,2022,10,2022-10-12,Night,4,-76.663,39.3061,1,45,0,6397,TRUE,"c(-76.663, 39.3061)",#0065d1
+2022-10-15T19:53:53Z,2600 Wilkens Ave,Southwestern,Millhill,Street,2022,10,2022-10-15,Evening,4,-76.6561,39.279,1,53,0,6406,TRUE,"c(-76.6561, 39.279)",#0065d1
+2022-10-21T14:13:14Z,3000 Greenspring Av,Northwestern,Druid Hill Park,Street,2022,10,2022-10-21,Early Afternoon,4,-76.6505,39.3202,1,28,0,6419,TRUE,"c(-76.6505, 39.3202)",#ff9200
+2022-10-26T20:01:13Z,2100 Brunt St,Central,Druid Heights,Street,2022,10,2022-10-26,Night,4,-76.6381,39.3071,1,18,0,6430,TRUE,"c(-76.6381, 39.3071)",#00d3ff
+2022-10-29T16:06:14Z,1800 Brunt St,Central,Upton,Dwelling,2022,10,2022-10-29,After School,4,-76.6356,39.3051,1,43,0,6439,TRUE,"c(-76.6356, 39.3051)",#00d3ff
+2022-10-30T21:04:19Z,500 S Bentalou St,Southwestern,Carrollton Ridge,Street,2022,10,2022-10-30,Night,4,-76.6526,39.2814,1,43,0,6442,TRUE,"c(-76.6526, 39.2814)",#0065d1
+2022-11-01T19:40:44Z,2000 W Pratt St,Southern,Carrollton Ridge,Street,2022,11,2022-11-01,Evening,4,-76.6486,39.2852,4,32.8,1,6445,TRUE,"c(-76.6486, 39.2852)",#d25a3f
+2022-11-03T04:35:10Z,2500 Brookfield Ave,Central,Reservoir Hill,Street,2022,11,2022-11-03,Morning,4,-76.634,39.3153,1,38,0,6448,TRUE,"c(-76.634, 39.3153)",#00d3ff
+2022-11-03T18:04:40Z,1800 Ramsay St,Southern,Carrollton Ridge,Alley,2022,11,2022-11-03,Evening,4,-76.6457,39.2831,1,48,0,6449,TRUE,"c(-76.6457, 39.2831)",#d25a3f
+2022-11-05T19:47:10Z,1500 Eutaw Pl,Central,Madison Park,Dwelling,2022,11,2022-11-05,Evening,4,-76.6283,39.3054,1,27,0,6456,TRUE,"c(-76.6283, 39.3054)",#00d3ff
+2022-11-05T23:07:26Z,0 S Greene St,Central,University Of Maryland,Street,2022,11,2022-11-05,Night,4,-76.6237,39.2884,1,16,1,6459,TRUE,"c(-76.6237, 39.2884)",#00d3ff
+2022-11-11T00:14:27Z,2900 Reisterstown Rd,Northwestern,Liberty Square,Street,2022,11,2022-11-11,Early Morning,4,-76.6545,39.3209,1,19,0,6469,TRUE,"c(-76.6545, 39.3209)",#ff9200
+2022-11-14T11:36:55Z,1200 Braddish Ave,Southwestern,Winchester,Street,2022,11,2022-11-14,Morning,4,-76.6609,39.3016,1,24,0,6474,TRUE,"c(-76.6609, 39.3016)",#0065d1
+2022-11-18T22:31:57Z,0 S Greene St,Central,University Of Maryland,Hospital,2022,11,2022-11-18,Night,4,-76.6237,39.2884,1,23,0,6483,TRUE,"c(-76.6237, 39.2884)",#00d3ff
+2022-11-20T16:30:32Z,2600 Saint Benedict St,Southwestern,Millhill,Street,2022,11,2022-11-20,After School,4,-76.6565,39.28,1,25,0,6486,TRUE,"c(-76.6565, 39.28)",#0065d1
+2022-11-20T22:25:19Z,1500 Pennsylvania Ave,Central,Upton,Street,2022,11,2022-11-20,Night,4,-76.6328,39.3019,3,21.3,0,6487,TRUE,"c(-76.6328, 39.3019)",#00d3ff
+2022-11-28T12:26:32Z,2300 Tioga Pkwy,Northwestern,Liberty Square,Street,2022,11,2022-11-28,Early Afternoon,4,-76.6544,39.3198,1,27,0,6498,TRUE,"c(-76.6544, 39.3198)",#ff9200
+2022-11-28T16:16:43Z,0 S Greene St,Central,University Of Maryland,Hospital,2022,11,2022-11-28,After School,4,-76.6237,39.2884,1,24,0,6500,TRUE,"c(-76.6237, 39.2884)",#00d3ff
+2022-11-28T22:01:49Z,0 S Greene St,Central,University Of Maryland,Hospital,2022,11,2022-11-28,Night,4,-76.6237,39.2884,1,23,0,6502,TRUE,"c(-76.6237, 39.2884)",#00d3ff
+2022-11-29T16:11:27Z,100 N Kossuth St,Southwestern,Saint Josephs,Alley,2022,11,2022-11-29,After School,4,-76.6737,39.2885,1,34,0,6504,TRUE,"c(-76.6737, 39.2885)",#0065d1
+2022-11-29T21:35:50Z,700 Poplar Grove St,Southwestern,Franklintown Road,Street,2022,11,2022-11-29,Night,4,-76.665,39.2954,1,29,0,6505,TRUE,"c(-76.665, 39.2954)",#0065d1
+2022-12-10T20:22:29Z,800 N Martin Luther King Jr Blvd,Central,Madison Park,Street,2022,12,2022-12-10,Night,4,-76.6235,39.2992,1,20,0,6527,TRUE,"c(-76.6235, 39.2992)",#00d3ff
+2022-12-12T05:29:34Z,1300 Washington Blvd,Southern,Washington Village/Pigtown,Street,2022,12,2022-12-12,Morning,4,-76.6355,39.2807,1,36,0,6530,TRUE,"c(-76.6355, 39.2807)",#d25a3f
+2022-12-13T18:09:52Z,2100 Stoddard Al,Central,Druid Heights,Alley,2022,12,2022-12-13,Evening,4,-76.6361,39.3085,1,29,0,6534,TRUE,"c(-76.6361, 39.3085)",#00d3ff
+2022-12-14T00:10:13Z,0 S Greene St,Central,University Of Maryland,Street,2022,12,2022-12-14,Early Morning,4,-76.6237,39.2884,1,30,0,6535,TRUE,"c(-76.6237, 39.2884)",#00d3ff
+2022-12-20T15:18:31Z,1000 W North Ave,Central,Madison Park,Parking Lot,2022,12,2022-12-20,After School,4,-76.634,39.3102,1,34,0,6539,TRUE,"c(-76.634, 39.3102)",#00d3ff
+2022-12-21T14:49:11Z,0 S Howard St,Central,Downtown,Public Area,2022,12,2022-12-21,Early Afternoon,4,-76.6193,39.2893,1,36,0,6543,TRUE,"c(-76.6193, 39.2893)",#00d3ff
+2022-12-24T19:07:33Z,1600 Bolton St,Central,Bolton Hill,Street,2022,12,2022-12-24,Evening,4,-76.627,39.3077,1,16,1,6548,TRUE,"c(-76.627, 39.3077)",#00d3ff
+2022-12-27T22:31:54Z,3100 Westmont Ct,Southwestern,Rosemont,Street,2022,12,2022-12-27,Night,4,-76.6689,39.302,1,26,0,6555,TRUE,"c(-76.6689, 39.302)",#0065d1
+2022-12-29T13:56:12Z,2000 W Pratt St,Southern,Carrollton Ridge,Street,2022,12,2022-12-29,Early Afternoon,4,-76.6486,39.2852,1,25,0,6556,TRUE,"c(-76.6486, 39.2852)",#d25a3f
+2022-12-29T16:03:30Z,500 W Mulberry St,Central,University Of Maryland,Common Business,2022,12,2022-12-29,After School,4,-76.6234,39.2937,1,30,0,6557,TRUE,"c(-76.6234, 39.2937)",#00d3ff

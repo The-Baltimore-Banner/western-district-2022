@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><metadata>
+    <idinfo>
+        <citation>
+            <citeinfo>
+                <origin/>
+                <pubdate>20100101</pubdate>
+                <title>Maryland Census Boundaries - Census Tracts 2020</title>
+                <onlink>https://geodata.md.gov/imap/rest/services/Demographics/MD_CensusBoundaries/MapServer/2</onlink>
+            </citeinfo>
+        </citation>
+        <descript>
+            <abstract>Census Blocks are statistical areas bounded on all sides by visible features, such as streets, roads, streams, and railroad tracks, and/or by nonvisible boundaries such as city, town, township, and county limits, and short line-of-sight extensions of streets and roads. Census blocks are relatively small in area; for example, a block in a city bounded by streets. However, census blocks in remote areas are often large and irregular and may even be many square miles in area. A common misunderstanding is that data users think census blocks are used geographically to build all other census geographic areas, rather all other census geographic areas are updated and then used as the primary constraints, along with roads and water features, to delineate the tabulation blocks. As a result, all 2020 Census blocks nest within every other 2020 Census geographic area, so that Census Bureau statistical data can be tabulated at the block level and aggregated up to the appropriate geographic areas. Blocks are the smallest geographic areas for which the Census Bureau publishes data from the decennial census. Block Groups (BGs) are defined before tabulation block delineation and numbering, but are clusters of blocks within the same census tract that have the same first digit of their 4-digit census block number from the same decennial census. Census 2020 BGs generally contained between 600 and 3,000 people, with an optimum size of 1,500 people. Most BGs were delineated by local participants in the Census Bureau's Participant Statistical Areas Program (PSAP). The primary purpose of census tracts is to provide a stable set of geographic units for the presentation of census data and comparison back to previous decennial censuses. Census tracts generally have a population size between 1,200 and 8,000 people, with an optimum size of 4,000 people. When first delineated, census tracts were designed to be homogeneous with respect to population characteristics, economic status, and living conditions. Census tract boundaries generally follow visible and identifiable features. State and county boundaries always are census tract boundaries in the standard census geographic hierarchy. In a few rare instances, a census tract may consist of noncontiguous areas.This is a MD iMAP hosted service layer. Find more information at https://imap.maryland.gov.Feature Service Layer Link:https://geodata.md.gov/imap/rest/services/Demographics/MD_CensusBoundaries/MapServer/2</abstract>
+            <purpose>Maryland Census Boundaries - Census Tracts 2020</purpose>
+        </descript>
+        <status>
+            <update>None planned</update>
+        </status>
+        <keywords>
+            <theme>
+                <themekt>None</themekt>
+                <themekey>MDP</themekey>
+                <themekey>Vector</themekey>
+                <themekey>Dynamic</themekey>
+                <themekey>Maryland</themekey>
+                <themekey>MD</themekey>
+                <themekey>MD iMAP</themekey>
+                <themekey>Census</themekey>
+                <themekey>Census Block Groups</themekey>
+                <themekey>Census Blocks</themekey>
+                <themekey>Census Tracts</themekey>
+                <themekey>2010</themekey>
+                <themekey>WMS</themekey>
+                <themekey>KML</themekey>
+                <themekey>Maryland Department of Planning</themekey>
+                <themekey>DEMO</themekey>
+                <themekey>Demographics</themekey>
+            </theme>
+        </keywords>
+        <accconst>Other Constraints</accconst>
+        <useconst>The Spatial Data, and the information therein, (collectively the "Data") is provided "as is" without warranty of any kind, either expressed, implied, or statutory. The user assumes the entire risk as to quality and performance of the Data. No guarantee of accuracy is granted, nor is any responsibility for reliance thereon assumed. In no event shall the State of Maryland be liable for direct, indirect, incidental, consequential or special damages of any kind. The State of Maryland does not accept liability for any damages or misrepresentation caused by inaccuracies in the Data or as a result to changes to the Data, nor is there responsibility assumed to maintain the Data in any manner or form. The Data can be freely distributed as long as the metadata entry is not modified or deleted. Any data derived from the Data must acknowledge the State of Maryland in the metadata.</useconst>
+        <datacred>MD iMAP, MDP, Karen Maisenhalder, karen.maisenhalder@maryland.gov, U.S. Census</datacred>
+    </idinfo>
+    <metainfo>
+        <metd>20171222</metd>
+        <metc>
+            <cntinfo>
+                <!--no contact person or organization name available-->
+            </cntinfo>
+        </metc>
+        <metstdn>FGDC Content Standard for Digital Geospatial Metadata</metstdn>
+        <metstdv>FGDC-STD-001-1998</metstdv>
+        <mettc>local time</mettc>
+    </metainfo>
+</metadata>

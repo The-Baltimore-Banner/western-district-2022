@@ -1,0 +1,1077 @@
+---
+title: "fact-check"
+output: html_document
+date: "2023-01-19"
+---
+
+```{r setup, include=FALSE}
+
+knitr::opts_chunk$set(echo = TRUE)
+library(tidyverse)
+library(readr)
+library(janitor)
+library(lubridate)
+library(sf)
+library(mapview)
+library(RColorBrewer)
+library(units)
+library(tidycensus)
+census_api_key("INSERT YOUR CENSUS API KEY HERE")
+options(digits=3)
+options(scipen=999)
+'%notin%' <- Negate('%in%')
+
+#does a standard group_by and count() with percentage
+grouper <- function(input_df, group_by_column, new_column_name = "n()"){
+  output_df <- input_df %>%
+    group_by(.data[[group_by_column]]) %>%
+    summarise(temp_count = n()) %>%
+    mutate(percent = temp_count/sum(temp_count)*100) %>%
+    arrange(desc(percent)) %>%
+    rename(!!new_column_name := temp_count)
+  return(output_df)
+}
+
+#group/counts every column in input dataframe
+group_count <- function(input_df, group_column_name='n()', state_filter=NA, start_col = 1){
+  column_names <- colnames(input_df)
+  if(!is.na(state_filter)){
+    input_df <- input_df %>%
+      filter(state == state_filter)
+  }
+  for (column in column_names[start_col:length(column_names)]){
+    output <- grouper(input_df, column, group_column_name)
+    print(output)
+  }
+}
+
+grouper_sum <- function(input_df, group_by_column, sum_column, new_column_name = "n()"){
+  output_df <- input_df %>%
+    group_by(.data[[group_by_column]]) %>%
+    summarise(temp_count = sum(.data[[sum_column]])) %>%
+    mutate(percent = temp_count/sum(temp_count)*100) %>%
+    arrange(desc(percent)) %>%
+    rename(!!new_column_name := temp_count)
+  return(output_df)
+  
+}
+
+#lowers case of every character column in a dataframe
+lower_df <- function(input_df){
+  names <- colnames(input_df)
+  output_df <- input_df
+  names <- colnames(output_df)
+  for (name in names){
+    if (is.character(output_df[[name]])){
+      output_df[[name]] <- tolower(output_df[[name]])
+      #print('yes')
+    } else {
+      output_df[[name]] <- output_df[[name]]
+      #print('no')
+    }
+  }
+  return(output_df)
+}
+
+```
+
+```{r}
+
+victims <- read_csv('data/Part_1_Crime_Data_.csv') %>%
+  #cleaning column names
+  clean_names() %>%
+  #lowering text in df
+  lower_df() %>%
+  #converting to lubridate
+  mutate(crime_date_time = ymd_hms(crime_date_time))  %>%
+  #making year month hour columns
+  mutate(year = year(crime_date_time),
+         month = month(crime_date_time),
+         hour = hour(crime_date_time),
+         date = as_date(crime_date_time, 'day')) %>%
+  #removing lat/long because there are multiples and ethnicity because it is unreliable and uneccesary for weekend count analysis
+  select(-x, -y, -row_id, -latitude, -longitude, -ethnicity) %>%#, -shape) %>%
+  #filtering for year
+  #filter(year >= 2011) %>%
+  #splitting geo location
+  separate(geo_location, c("latitude", "longitude"), ',') %>%
+  #removing parenthesis
+  mutate(latitude = gsub('\\(', '', latitude),
+         longitude = gsub('\\)', '', longitude)) %>%
+  #repairing wrong ages
+  mutate(age = case_when(
+    age > 0 & age < 100 ~ age,
+    TRUE ~ NA_real_
+  )) %>%
+  #creating age ranges
+  mutate(age_range = case_when(
+    age < 18 & age > 0 ~ "juvenile",
+    age >= 18 & age <= 25 ~ "18 to 25",
+    age >= 26 & age <= 34 ~ "26 to 34",
+    age >= 35 & age <= 50 ~ "35 to 50",
+    age > 50 & age < 75 ~ "51 to 74",
+    age >= 75 & age < 85 ~ "75 to 84",
+    age >= 85 ~ "85 to 100",
+    TRUE ~ "NA"
+  )) %>%
+  #creating time ranges
+  mutate(time_range = case_when(
+    hour <= 3 ~ "early morning",
+    hour < 12 & hour > 3 ~ "morning",
+    hour >= 12 & hour < 15 ~ "early afternoon",
+    hour >= 13 & hour < 17 ~ "after school",
+    hour >= 17 & hour < 20 ~ "evening",
+    hour >= 20 ~ "night"
+  ))  %>%
+  #labeling quarters
+    mutate(quarter = case_when(
+    month %in% c(1,2,3) ~ 1,
+    month %in% c(4,5,6) ~ 2,
+    month %in% c(7,8,9) ~ 3,
+    month %in% c(10,11,12) ~ 4
+  )) %>%
+  #creating date to create viz with
+  mutate(quarter_date = case_when(
+    quarter == 1 ~ ymd(paste0(year, "-3-31")),
+    quarter == 2 ~ ymd(paste0(year, "-6-30")),
+    quarter == 3 ~ ymd(paste0(year, "-9-30")),
+    quarter == 4 ~ ymd(paste0(year, "-12-31"))
+  )) %>%
+  #filtering for reliable data; reporting shows 2014 and earlier to be unreliable, BPD confirmed
+  filter(year >= 2015) %>%
+  filter(year < 2023)
+
+#creating a distinct database of shootings that counts the number of victims in each event  
+shootings <- victims %>%
+  #filtering for shootings and homicides that involved firearms
+  filter(description %in% c("shooting", "homicide"),
+         weapon == "firearm") %>%
+  #mutating database of victims to database of distinct crimes by counting victims that share these attributes
+  group_by(crime_date_time, location, district, neighborhood, premise, year, month, date, time_range, quarter, longitude, latitude) %>%
+  #countingn victims, average age and juvenile victims
+  summarise(victims = n(),
+            average_age = mean(age, na.rm = TRUE),
+            juvenile_victims = sum(age_range == "juvenile")) %>%
+  #repairing longitude and latitude data and converting crs
+  filter(longitude != "",
+         latitude != "") %>%
+  st_as_sf(coords = c("longitude", "latitude"),
+                 crs = 4326, 
+                 remove = FALSE)
+
+#creating a unique identifier for each shooting
+shootings$id <- seq.int(nrow(shootings))
+
+#creating a database of shootings that occured in the western
+western_shootings <- shootings %>%
+  filter(district == "western")
+
+#distinct years
+years <- sort(unique(victims$year))
+
+#distinct districts
+districts <- sort(unique(victims$district))
+
+#reading 911 calls that are cleaned in a seperate project
+x911_calls <- read_csv("data/clean-911-calls.csv")
+
+#reading 311 calls that are cleaned in a seperate project
+x311_calls <- read_csv("data/clean-311-calls.csv")
+
+#reading arrests
+arrests <- read_csv("data/BPD_Arrests.csv") %>%
+  clean_names() %>%
+  lower_df() %>%
+  #creaint age ranges
+  mutate(age_range = case_when(
+    age < 18 & age > 0 ~ "juvenile",
+    age >= 18 & age <= 25 ~ "18 to 25",
+    age >= 26 & age <= 34 ~ "26 to 34",
+    age >= 35 & age <= 50 ~ "35 to 50",
+    age > 50 & age < 75 ~ "51 to 74",
+    age >= 75 & age < 85 ~ "75 to 84",
+    age >= 85 ~ "85 to 100",
+    TRUE ~ "NA"
+  )) %>%
+  #converting dates
+  mutate(year = year(arrest_date_time),
+         date = date(arrest_date_time)) %>%
+  rename(incident = incident_offence) %>%
+  select(arrest_date_time, date, year, district, neighborhood, latitude, longitude, age, gender, race, incident, age_range) %>%
+  filter(year < 2023)
+## SHAPEFILES
+
+#reading gilmore homes parcel shapefile
+gilmore_homes <- st_read("data/gilmore-homes.geojson")
+
+#reading districts shapefile
+districts <- st_read("data/Police_Districts/Police_Districts.shp")
+
+#creating western_ isrict shape
+western_district <- districts %>%
+  filter(dist_name == "Western")
+
+#reading neighborhoods database
+neighborhoods <- st_read("data/baltimore-neighborhoods.geojson") %>%
+  clean_names() %>%
+  lower_df()
+
+#creating database of western neighborhoods
+western_neighborhoods <- grouper(western_shootings, "neighborhood")
+
+western_neighborhoods <- neighborhoods %>%
+  filter(name %in% western_neighborhoods$neighborhood)
+
+#this makes 
+pal <-  mapviewPalette("mapviewSpectralColors")
+
+```
+
+## Gun violence isn’t simply shifting from the Western District into other parts of Baltimore.
+
+# "But while these concerns have been at the forefront of debates over the impacts of GVRS, The Banner’s analysis found that shootings do not appear to have been displaced outside the Western District. Generally, shootings were lower than the year before in five of nine police districts."
+
+```{r}
+
+shootings_by_district <- shootings %>%
+  group_by(district, year) %>%
+  summarise(shootings = n()) %>%
+  ungroup() %>%
+  as.data.frame() %>%
+  select(-geometry) %>%
+  pivot_wider(values_from = shootings, names_from = year) %>%
+  clean_names() 
+
+recent_shootings_by_district <- shootings_by_district %>%
+  select(district, x2021, x2022) %>%
+  adorn_totals("row") %>%
+  as.data.frame() %>%
+  mutate(raw_change = x2022-x2021,
+    change = ((raw_change)/x2021)*100) %>%
+  filter(!is.na(district)) %>%
+  arrange(change) 
+
+recent_shootings_by_district
+
+```
+
+"Though the large drop in the Western was largely offset by rising shootings in the Northeastern"
+
+```{r}
+
+recent_shootings_by_district %>%
+  filter(district %in% c("western", "northeast"))
+
+
+```
+
+"In the Northeastern, the district with the highest spike in shootings last year, the number of shootings returned to pre-pandemic levels after dipping slightly in 2020 and 2021."
+
+```{r}
+
+northeast_shootings <- shootings %>%
+  filter(district == "northeast")
+
+grouper(northeast_shootings, "year") %>% 
+  arrange(desc(year))
+
+```
+
+"Northeastern neighborhoods with the most shootings in 2022 are those that have historically had the most gun violence: Frankford, Belair-Edison and Coldstream Homestead Montebello. No neighborhood in the district has had an explosion in unprecedented shootings."
+
+```{r}
+
+northeast_shootings %>%
+  group_by(neighborhood, year) %>%
+  count() %>%
+  as.data.frame() %>%
+  select(-geometry) %>%
+  arrange(year) %>%
+  pivot_wider(names_from = year, values_from = n) %>%
+  clean_names %>%
+  arrange(desc(x2022))
+
+
+```
+
+"Rather than pushing violent crime to other parts of the city, the revitalized push for the GVRS in the Western District may have benefited the surrounding areas. The Banner found that shootings in other districts within about 10 city blocks of the Western are at their lowest count since 2015, the year Freddie Gray died."
+
+```{r}
+
+near_western <- function(blocks){
+  
+  #50 meters to account for street just in front of the place
+  #100 meters per block
+  distance <- blocks*100+50  
+  
+  near_western <- as.data.frame(st_is_within_distance(shootings, western_district, dist = distance, sparse = FALSE)) %>%
+    clean_names() %>%
+    mutate(near = case_when(
+       v1 == TRUE ~ TRUE,
+       TRUE ~ FALSE
+    )) %>%
+    select(near) %>%
+    filter()
+  
+  near_western <- shootings %>%
+    cbind(near_western$near) %>%#, in_western$inside) %>%
+    clean_names() %>%
+    filter(near_western_near == TRUE,
+           #in_western_inside == FALSE,
+           district %notin% c("western"))
+  
+  map <- mapView(western_district$geometry, alpha.regions = 0, color = "red", lwd = 2, layer.name = "Western District") + 
+  mapview(near_western$geometry,
+          cex = near_western$victims*2.5, 
+          legend = TRUE, 
+          col.regions = pal(100), 
+          layer.name = "Shooting victims")
+  
+  near_western_by_year <- near_western %>%
+    as.data.frame() %>%
+    group_by(year) %>%
+    summarise(shootings = n(),
+              victims = sum(victims))
+  
+  near_western_by_year_by_district <- near_western %>%
+    as.data.frame() %>%
+    #mutate(year_month = mdy(paste0(month, "-1-", year))) %>%
+    group_by(year, district) %>%
+    summarise(shootings = n(),
+              victims = sum(victims)) %>%
+    as.data.frame() %>%
+    select(#-geometry, 
+      -victims) %>%
+    pivot_wider(values_from = shootings, names_from = year) %>%
+    adorn_totals("row") %>%
+    as.data.frame()
+  
+  plot <- ggplot(near_western_by_year, aes(x=year, y=shootings)) +
+    geom_line() +
+    ggtitle(paste0("Shootings within ", blocks, " block(s) of Western District"))
+  
+  print(map)
+  print(plot)
+  print(near_western_by_year_by_district)
+  print(near_western_by_year %>%
+        mutate(blocks = paste0(blocks)) %>%
+        select(blocks, shootings, year) %>%
+        pivot_wider(values_from = shootings, names_from = year))
+
+}
+
+near_western(10)
+
+```
+
+VIZ: "Shootings in other police districts around the Western District were also down significantly from 2021"
+     "The number of shootings within 20 blocks of the Western District border was also down compared to 2021 but still much higher than 2015. Shootings within 5 blocks are down compared to 2021 but slightly higher than 2020."
+
+```{r}
+
+near_western(5)
+
+```
+```{r}
+
+near_western(20)
+
+```
+
+"The trends remained the same when excluding the Central District, which also saw a large drop in shootings. Shootings just outside the Western District were slightly higher in the Southeastern District inside 5 blocks but lower inside 10 and 20."
+
+```{r}
+
+near_western_not_central <- function(blocks){
+
+  distance <- blocks*100+50  
+
+  in_western <- as.data.frame(st_is_within_distance(shootings, western_district, dist = 0, sparse = FALSE)) %>%
+    clean_names() %>%
+    mutate(inside = case_when(
+       v1 == TRUE ~ TRUE,
+       #v2 == TRUE ~ TRUE,
+       #v3 == TRUE ~ TRUE,
+       #v4 == TRUE ~ TRUE,
+       TRUE ~ FALSE
+    )) %>%
+    select(inside)
+  
+  near_western <- as.data.frame(st_is_within_distance(shootings, western_district, dist = distance, sparse = FALSE)) %>%
+    clean_names() %>%
+    mutate(near = case_when(
+       v1 == TRUE ~ TRUE,
+       #v2 == TRUE ~ TRUE,
+       #v3 == TRUE ~ TRUE,
+       #v4 == TRUE ~ TRUE,
+       TRUE ~ FALSE
+    )) %>%
+    select(near) %>%
+    filter()
+  
+  near_western <- shootings %>%
+    cbind(near_western$near, in_western$inside) %>%
+    clean_names() %>%
+    filter(near_western_near == TRUE,
+           in_western_inside == FALSE,
+           district %notin% c("central", "western"))
+  
+  map <- mapView(western_district$geometry, alpha.regions = 0, color = "red", lwd = 2, layer.name = "Western District") + 
+  mapview(near_western$geometry,
+          cex = near_western$victims*2.5, 
+          legend = TRUE, 
+          col.regions = pal(100), 
+          layer.name = "Shooting victims")
+  
+  near_western_by_year <- near_western %>%
+    as.data.frame() %>%
+    #mutate(year_month = mdy(paste0(month, "-1-", year))) %>%
+    group_by(year) %>%
+    summarise(shootings = n(),
+              victims = sum(victims))
+  
+  near_western_by_year_by_district <- near_western %>%
+    as.data.frame() %>%
+    #mutate(year_month = mdy(paste0(month, "-1-", year))) %>%
+    group_by(year, district) %>%
+    summarise(shootings = n(),
+              victims = sum(victims)) %>%
+    as.data.frame() %>%
+    select(#-geometry, 
+      -victims) %>%
+    pivot_wider(values_from = shootings, names_from = year)
+  
+  plot <- ggplot(near_western_by_year, aes(x=year, y=shootings)) +
+    geom_line() +
+    ggtitle(paste0("Shootings within ", blocks, " block(s) of Western District"))
+  
+  print(map)
+  print(plot)
+  print(near_western_by_year_by_district)
+  print(near_western_by_year %>%
+        mutate(blocks = paste0(blocks)) %>%
+        select(blocks, shootings, year) %>%
+        pivot_wider(values_from = shootings, names_from = year))
+
+}
+
+near_western_not_central(10)
+
+```
+
+```{r}
+
+near_western_not_central(5)
+
+```
+
+```{r}
+
+near_western_not_central(20)
+
+```
+
+## A heavier police presence isn’t the full story in the Western, but other factors could be at play
+
+"Though the Western had the second highest arrest total of any district in 2022, it has been on a steady downward slope since almost 9 times as many arrests were made in 2010."
+
+```{r}
+
+temp <- grouper(arrests %>%
+          filter(district == "western"), "year", "arrests") %>%
+  arrange(desc(year))
+
+temp
+```
+
+```{r}
+
+temp %>%
+  filter(year %in% c(2010, 2022)) %>%
+  select(-percent) %>%
+  pivot_wider(values_from = arrests, names_from = year) %>%
+  clean_names() %>%
+  mutate(times_higher = x2010/x2022)
+
+```
+
+
+```{r}
+
+print(ggplot(temp, aes(x = year, y = arrests))  +
+    geom_line()  +
+    ggtitle("Arrests have dropped every year since 2010."))
+
+```
+
+"One caveat is that the public data make it hard to say if there are more arrests in the Western District. The Open Baltimore arrests database only includes location information for arrests from police intervention. Most warrant arrests do not have locations. That includes someone arrested by a police officer who witnessed them commit an arrestable offense but that person already had an existing arrest warrant. These arrests have also been dropping at a similar rate but make up 64% of all arrests."
+
+```{r}
+
+
+
+years <- 2015:2022
+
+for (input_year in years){
+  
+  temp <- grouper (arrests %>%
+      filter(year == input_year), "district", paste0(input_year)) %>%
+      select(-percent)
+    
+  
+  if (input_year == years[1]){
+    
+    district_arrests_by_year <- temp
+    
+  } else {
+    
+    district_arrests_by_year <- district_arrests_by_year %>%
+      full_join(temp)
+    
+  }
+  
+}
+
+district_arrests_by_year <- district_arrests_by_year %>%
+  clean_names()
+
+district_arrests_by_year_with_total <- district_arrests_by_year %>%
+  adorn_totals("row") %>%
+  arrange(desc(x2022)) %>%
+  as.data.frame()
+
+district_arrests_by_year_with_total
+
+```
+
+```{r}
+
+district_arrests_by_year_with_total$x2022[2]/district_arrests_by_year_with_total$x2022[1]
+
+```
+
+"Though the district with the most shootings in 2022 also had the largest decline in arrests, there is no statistical relationship between the change in arrests and the change in shootings across all police districts since 2015."
+
+```{r}
+
+arrest_shootings_change_by_district <- district_arrests_by_year %>%
+  adorn_totals("row") %>%
+  arrange(desc(x2022)) %>%
+  as.data.frame() %>%
+  select(district, x2021, x2022) %>%
+  mutate(raw_change = x2022 - x2021,
+         perc_change = (raw_change/x2021)*100) %>%
+  arrange(desc(perc_change)) %>%
+  left_join(recent_shootings_by_district %>%
+              rename(x2021_shooting = x2021,
+                     x2022_shooting = x2022,
+                     shooting_raw_change = raw_change,
+                     shooting_perc_change = change)) %>%
+  select(district, perc_change, shooting_perc_change) %>%
+  rename(arrest_perc_change = perc_change) %>%
+  arrange(desc(shooting_perc_change))
+
+arrest_shootings_change_by_district
+
+```
+
+### Correlating 2022 change in shootings and arrests
+
+```{r}
+
+cor.test(arrest_shootings_change_by_district$arrest_perc_change, arrest_shootings_change_by_district$shooting_perc_change,
+                    method = "pearson")
+
+#there is a statistically insignificant relationship between arrests and shootings: the more arrests, the fewer the shootings
+#
+```
+```{r}
+
+ggplot(arrest_shootings_change_by_district, aes(x=shooting_perc_change, y=arrest_perc_change)) +
+  geom_point() +
+  stat_smooth(method = "lm")
+
+
+```
+
+
+### CALCULATING CHANGE BY YEAR
+
+```{r}
+
+shooting_change_by_year_by_district <- shootings %>%
+  group_by(district, year) %>%
+  summarise(shootings = n()) %>%
+  ungroup() %>%
+  as.data.frame() %>%
+  select(-geometry) %>%
+  pivot_wider(values_from = shootings, names_from = year) %>%
+  filter(district != "sd5") %>%
+  clean_names() %>%
+  mutate(x2016_perc = ((x2016-x2015)/x2015)*100,
+         x2017_perc = ((x2017-x2016)/x2016)*100,
+         x2018_perc = ((x2018-x2017)/x2017)*100,
+         x2019_perc = ((x2019-x2018)/x2018)*100,
+         x2020_perc = ((x2020-x2019)/x2019)*100,
+         x2021_perc = ((x2021-x2020)/x2020)*100,
+         x2022_perc = ((x2022-x2021)/x2021)*100
+         ) %>%
+  select(district, x2016_perc, x2017_perc, x2018_perc, x2019_perc, x2020_perc, x2021_perc, x2022_perc) %>%
+  pivot_longer(cols = c(x2016_perc, x2017_perc, x2018_perc, x2019_perc, x2020_perc, x2021_perc, x2022_perc), names_to = "year") %>%
+  rename(shooting_perc_change = value)
+
+shooting_change_by_year_by_district
+```
+
+```{r}
+
+arrest_change_by_year_by_district <- district_arrests_by_year  %>%
+  clean_names() %>%
+  mutate(x2016_perc = ((x2016-x2015)/x2015)*100,
+         x2017_perc = ((x2017-x2016)/x2016)*100,
+         x2018_perc = ((x2018-x2017)/x2017)*100,
+         x2019_perc = ((x2019-x2018)/x2018)*100,
+         x2020_perc = ((x2020-x2019)/x2019)*100,
+         x2021_perc = ((x2021-x2020)/x2020)*100,
+         x2022_perc = ((x2022-x2021)/x2021)*100
+         )  %>%
+  filter(!is.na(district)) %>%
+  select(district, x2016_perc, x2017_perc, x2018_perc, x2019_perc, x2020_perc, x2021_perc, x2022_perc) %>%
+  pivot_longer(cols = c(x2016_perc, x2017_perc, x2018_perc, x2019_perc, x2020_perc, x2021_perc, x2022_perc), names_to = "year")  %>%
+  rename(arrest_perc_change = value)
+
+
+change_by_year_by_district <- shooting_change_by_year_by_district %>%
+  inner_join(arrest_change_by_year_by_district) %>%
+  mutate(year = as.double(gsub("x", "", gsub("_perc", "", year))))
+
+change_by_year_by_district
+```
+
+### CORRELATING MULTI-YEAR RELATIONSHIP
+
+```{r}
+
+cor.test(change_by_year_by_district$shooting_perc_change, change_by_year_by_district$arrest_perc_change,
+                    method = "pearson")
+
+#this relationship is statisitically insignifigant
+
+```
+### LINEAR REGRESSION
+
+```{r}
+
+summary(lm(shooting_perc_change ~ arrest_perc_change + year, data=change_by_year_by_district))
+
+ggplot(change_by_year_by_district, aes(x=shooting_perc_change, y=arrest_perc_change)) +
+  geom_point() +
+  stat_smooth(method = "lm")
+
+```
+
+## The 33% drop in shootings cannot be explained by an especially high 2021.
+
+"Some skeptics of the group violence reduction strategy have pointed in particular to May and June of that year, when the Western District saw 27 shootings, to suggest that anomalous months in 2021 have resulted in a misleading figure for the drop in shootings."
+
+```{r}
+
+western_shootings %>%
+  as.data.frame() %>%
+  group_by(year, month) %>%
+  summarise(shootings = n(),
+            victims = sum(victims)) %>%
+  ungroup() %>%
+  mutate(victims_per_shooting = victims/shootings,
+         shooting_rank = min_rank(-shootings),
+         victim_rank = min_rank(-victims),
+         vps_rank = min_rank(-victims_per_shooting)) %>%
+  arrange(desc(month)) %>%
+  arrange(desc(year)) %>%
+  arrange((shooting_rank)) %>%
+  filter(year == 2021) %>%
+  arrange(vps_rank)
+
+
+```
+
+
+
+"It’s true that there was a relatively high number of people shot in those two months, but the number of shootings incidents weren’t extraordinary compared to other years. Whether we’re comparing shooting incidents or the number of people shot between 2021 and 2022, each metric shows a drop of more than 30%."
+
+```{r}
+
+shootings %>%
+  filter(year %in% c(2021, 2022),
+         district == "western") %>%
+  group_by(year) %>%
+  summarise(shootings = n()) %>%
+  as.data.frame() %>%
+  select(-geometry) %>%
+  pivot_wider(values_from = shootings, names_from = year) %>%
+  clean_names() %>%
+  mutate(raw_change = x2022 - x2021,
+         perc_change = (raw_change/x2021)*100,
+         type = "shootings") %>%
+  relocate(type) %>%
+  bind_rows(
+    shootings %>%
+      filter(year %in% c(2021, 2022),
+             district == "western") %>%
+      group_by(year) %>%
+      summarise(victims = sum(victims)) %>%
+      as.data.frame() %>%
+      select(-geometry) %>%
+      pivot_wider(values_from = victims, names_from = year) %>%
+      clean_names() %>%
+      mutate(raw_change = x2022 - x2021,
+             perc_change = (raw_change/x2021)*100,
+             type = "victims") %>%
+      relocate(type)
+      )
+```
+
+```{r}
+
+shootings %>%
+  filter(district == "western") %>%
+  group_by(year) %>%
+  summarise(shootings = n(),
+            victims = sum(victims))
+
+```
+
+
+"Moreover, the number of shootings and victims was already lower for both years compared to peaks in the wake of Freddie Gray’s death."
+
+```{r}
+
+#victims by year
+temp <- shootings %>%
+  filter(district == "western") %>%
+  group_by(year) %>%
+  summarise(victims = sum(victims)) %>%
+  as.data.frame() %>%
+  select(-geometry) 
+
+ggplot(temp, aes(x=year, y=victims)) +
+  geom_line()
+
+```
+
+```{r}
+
+#shootings by year
+temp <- shootings %>%
+  filter(district == "western") %>%
+  group_by(year) %>%
+  summarise(shootings = n()) %>%
+  as.data.frame() %>%
+  select(-geometry)
+
+ggplot(temp, aes(x=year, y=shootings)) +
+  geom_line()
+
+```
+
+"And the 2022 drop represents a substantial improvement for the district, even when compared to the quietest recent years on record. The 107 homicides and nonfatal shootings the district experienced in 2022 is 25% below the 2020 total, when the onset of the pandemic coincided with a recession in West Baltimore shootings."
+
+```{r}
+
+shootings %>%
+  filter(year %in% c(2020, 2022),
+         district == "western") %>%
+  group_by(year) %>%
+  summarise(shootings = n()) %>%
+  as.data.frame() %>%
+  select(-geometry) %>%
+  pivot_wider(values_from = shootings, names_from = year) %>%
+  clean_names() %>%
+  mutate(raw_change = x2022 - x2020,
+         perc_change = (raw_change/x2020)*100)
+
+```
+
+
+## The closure of the Gilmor Homes housing project doesn’t explain it.
+
+"But “the most crime ridden housing complex in the city,” as Mancuso called it, was partially demolished in 2020, and any impact on crime seems to have had its effect in 2021. A drop in shootings in the immediate vicinity of Gilmor Homes had already occurred before the start of 2022, meaning lower crime in the area was baked into the data before the group violence pilot got underway last year."
+
+```{r}
+
+near_Gilmore <- function(blocks){
+  
+  distance <- blocks*100+50  
+
+  near_complex <- as.data.frame(st_is_within_distance(western_shootings, Gilmore_homes, dist = distance, sparse = FALSE)) %>%
+    clean_names() %>%
+    mutate(within = case_when(
+       v1 == TRUE ~ TRUE,
+       v2 == TRUE ~ TRUE,
+       v3 == TRUE ~ TRUE,
+       v4 == TRUE ~ TRUE,
+       TRUE ~ FALSE
+    )) %>%
+    select(within)
+  
+  near_complex <- western_shootings %>%
+    cbind(near_complex$within) %>%
+    clean_names() %>%
+    filter(near_complex_within == TRUE)
+  
+  map <- mapView(Gilmore_homes$geometry, alpha.regions = 0, color = "red", lwd = 2, layer.name = "Gilmore Homes") + 
+  mapview(near_complex$geometry,
+          cex = near_complex$victims*2.5, 
+            legend = TRUE, 
+            col.regions = pal(100), 
+            layer.name = "Shooting victims")
+  
+  near_complex_by_year <- near_complex %>%
+    as.data.frame() %>%
+    #mutate(year_month = mdy(paste0(month, "-1-", year))) %>%
+    group_by(year) %>%
+    summarise(shootings = n(),
+              victims = sum(victims))
+  
+  plot <- ggplot(near_complex_by_year, aes(x=year, y=shootings)) +
+    geom_line() +
+    ggtitle(paste0("Shootings within ", blocks, " block(s) of Gilmore Homes"))
+  
+  print(map)
+  print(plot)
+  print(near_complex_by_year %>%
+          mutate(blocks = paste0(blocks)) %>%
+          select(blocks, shootings, year) %>%
+          pivot_wider(values_from = shootings, names_from = year))
+
+}
+
+near_Gilmore(1)
+
+```
+
+```{r}
+
+near_gilmore(2)
+
+```
+
+```{r}
+
+near_gilmore(3)
+
+```
+
+```{r}
+
+near_gilmore(4)
+
+```
+
+
+## Historic, unmatched population loss in the Western doesn’t explain it either.
+
+"The Western District has seen historic population loss unmatched by any other police district, a factor highlighted by the police union and other skeptics of the strategy as a driver of the 2022 drop in shootings."
+
+```{r}
+
+districts <- districts %>%
+  rename(district_area = SHAPE__Are)
+
+tracts <- st_read('data/Maryland_Census_Boundaries_-_Census_Tracts_2020/Maryland_Census_Boundaries_-_Census_Tracts_2020.shp') %>%
+  filter(COUNTYFP20 == 510) %>%
+  mutate(total_area = ALAND20 + AWATER20,
+         perc_land = ALAND20/total_area) %>%
+  rename(tract_area = ShapeSTAre) %>%
+  mutate(tract_area = tract_area*perc_land)
+
+difference <- st_difference(districts, tracts) %>%
+  clean_names()
+
+crosswalk <- st_intersection(tracts, districts) %>%
+ mutate(intersection_area = st_area(geometry))  %>%
+  as.data.frame() %>%
+  clean_names() %>%
+  select(geoid20, dist_name, district_area, tract_area, intersection_area) %>%
+  lower_df() %>%
+  separate(intersection_area, c("intersection_area", "junk"), " \\[") %>%
+  select(-junk) %>%
+  mutate(intersection_area = round(as.numeric(intersection_area))) %>%
+  mutate(tract_to_district = (intersection_area/tract_area)) %>%
+  mutate(tract_to_district = case_when(
+    tract_to_district > 1 ~ 1,
+    TRUE ~ tract_to_district
+  )) 
+
+crosswalk_check <- crosswalk %>%  
+  group_by(geoid20) %>%
+  summarise(tract_to_district = sum(tract_to_district),
+            dists = paste0(unique(dist_name), collapse = ", ")) %>%
+  filter(tract_to_district < 97) %>%
+  filter(str_detect(dists, ", "))
+
+crosswalk <- crosswalk %>%
+  select(geoid20, dist_name, tract_to_district) %>%
+  rename(district = dist_name)
+
+census_2021 <- get_acs(geography = "tract",
+        state = "md",
+        variables = "B01003_001",
+        year = 2021)
+
+
+census_2016 <- get_acs(geography = "tract",
+        state = "md",
+        variables = "B01003_001",
+        year = 2016)
+
+clean_census <- function(input_df, input_year){
+  
+  output_df <- input_df %>%
+    filter(str_detect(NAME, "Baltimore city")) %>%
+    mutate(year = input_year) %>%
+    rename(geoid20 = GEOID) %>%
+    select(geoid20, year, estimate, moe) 
+  
+  return(output_df)
+  
+}
+
+census <- clean_census(census_2021, "2021") %>%
+  bind_rows(clean_census(census_2016, "2016"))
+
+
+census_by_district <- census %>%
+  left_join(crosswalk) %>%
+  #mutate(min = min * tract_to_district,
+  #       max = max * tract_to_district) %>%
+  mutate(estimate = estimate * tract_to_district,
+         moe = moe * tract_to_district) %>%
+  group_by(district, year) %>%
+  #summarise(min = sum(min),
+  #          max = sum(max)) %>%
+  summarise(estimate = sum(estimate),
+            moe = sum(moe)) %>%
+  filter(!is.na(district)) %>%
+  mutate(min = estimate - moe,
+         max = estimate + moe) %>%
+  select(-moe) %>%
+  rename(average = estimate)
+
+census_by_district <- census_by_district %>%
+  pivot_wider(values_from = c(min, max, average), names_from = year) %>%
+  mutate(
+         min_change = round(min_2021 - min_2016),
+         max_change = round(max_2021 - max_2016),
+         avg_change = round(average_2021 - average_2016),
+         min_pop_change_perc = (min_change/min_2016)*100,
+         max_pop_change_perc = (max_change/max_2016)*100,
+         avg_pop_change_perc = (avg_change/average_2016)*100
+         ) 
+
+shootings_with_census_step_one <- shootings %>%
+  as.data.frame() %>%
+  filter(year %in% c(2016, 2021)) %>%
+  group_by(district, year) %>%
+  count() %>%
+  pivot_wider(values_from = n, names_from = year) %>%
+  clean_names() %>%
+  mutate(shooting_change_perc = ((x2021-x2016)/x2016)*100) %>%
+  mutate(district = case_when(
+    district == "northeast" ~ "northeastern",
+    district == "northwest" ~ "northwestern",
+    district == "southeast" ~ "southeastern",
+    district == "southwest" ~ "southwestern",
+    TRUE ~ district
+  )) %>%
+  full_join(census_by_district) 
+
+
+shootings_with_census <- shootings_with_census_step_one %>%
+  mutate(min_pop_loss = case_when(
+    min_pop_change_perc < 0 ~ TRUE,
+    TRUE ~ FALSE
+  )) %>%
+  mutate(avg_pop_loss = case_when(
+    avg_pop_change_perc < 0 ~ TRUE,
+    TRUE ~ FALSE
+  )) %>%
+  #mutate(shooting_loss = case_when(
+  #  shooting_change_perc < 0 ~ TRUE,
+  #  TRUE ~ FALSE
+  #)) %>%
+  mutate(max_pop_loss = case_when(
+    max_pop_change_perc < 0 ~ TRUE,
+    TRUE ~ FALSE
+  )) %>%
+  select(district, min_pop_loss, avg_pop_loss, max_pop_loss, #shooting_loss, 
+         min_pop_change_perc, avg_pop_change_perc, max_pop_change_perc, shooting_change_perc) %>%
+  arrange(min_pop_loss, avg_pop_loss, max_pop_loss#shooting_loss
+          ) %>%
+  filter(!is.na(district))
+
+shootings_with_census
+  
+
+```
+
+"But while the precise role that declining population has played in Western District crime is hard to pinpoint, a broader analysis found no relationship between population loss and the number of shootings in Baltimore police districts. Of the eight districts that saw an average population loss, The Banner found some with large decreases in population and small decreases in shootings; others showed large decreases in population and increases in shootings."
+
+```{r}
+
+shootings_with_census %>%
+  select(district, avg_pop_change_perc, shooting_change_perc)
+
+```
+
+"Even as the Western has seen five-year population losses as high as 22%, there hasn’t been any less tendency to report incidents to officials. District calls to 911 and 311 have held steady since 2019, including through the first six months of last year, the most recent data available."
+
+```{r}
+
+x911_calls %>%
+  mutate(year = year(calldatetime)) %>%
+  group_by(year, policedistrict) %>%
+  count() %>%
+  pivot_wider(values_from = n, names_from = year) 
+
+
+```
+
+```{r}
+
+x311_calls %>%
+  mutate(month = month(created_date)) %>%
+  filter(month <= 6) %>%
+  mutate(year = year(created_date)) %>%
+  group_by(year, police_district) %>%
+  count() %>%
+  pivot_wider(values_from = n, names_from = year) %>%
+  clean_names() %>%
+  mutate(x2022_change = ((x2022-x2021)/x2021)*100) %>%
+  relocate(police_district, x2022_change)
+
+```
+
+"The only discernible outcome of population loss in the Western District is an increase in the rate of shooting victims per resident. The Western already had the highest gunshot victim rate of any district with 4.5 victims per 1,000 residents."
+
+```{r}
+
+shootings_with_census_step_one %>%
+  select(district, x2016, x2021, min_2016, min_2021) %>%
+  mutate(x2016_victim_per_1k_resident = x2016/(min_2016/1000),
+         x2021_victim_per_1k_resident = x2021/(min_2021/1000)) %>%
+  filter(district == "western")
+
+```
+
+"With five years of population loss and a 6% decrease in the number of shootings, the rate increased to 5.4."
+
+```{r}
+
+shootings_with_census_step_one %>%
+  select(district, x2016, x2021, min_2016, min_2021) %>%
+  mutate(x2016_victim_per_1k_resident = x2016/(min_2016/1000),
+         x2021_victim_per_1k_resident = x2021/(min_2021/1000)) %>%
+  filter(district == "western")
+
+```
